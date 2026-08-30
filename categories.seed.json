@@ -1,0 +1,11 @@
+[
+  {"name":"Питбайки 110cc","key":"110cc","count":0},
+  {"name":"Питбайки 125cc","key":"125cc","count":0},
+  {"name":"Питбайки 140cc","key":"140cc","count":0},
+  {"name":"Питбайки 150cc","key":"150cc","count":0},
+  {"name":"Мини-кросс","key":"mini","count":0},
+  {"name":"Электропитбайки","key":"electric","count":0},
+  {"name":"Запчасти","key":"parts","count":0},
+  {"name":"Аксессуары","key":"accessories","count":0},
+  {"name":"Шлемы и защита","key":"helmet","count":0}
+]

@@ -1,0 +1,16 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "firestore.rules",
+      "products.seed.json",
+      "seed-products.html",
+      "README.md"
+    ],
+    "cleanUrls": true
+  }
+}

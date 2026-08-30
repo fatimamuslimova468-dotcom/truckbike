@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Truck Bike — инициализация Firestore</title><style>body{font-family:system-ui,-apple-system,sans-serif;max-width:760px;margin:50px auto;padding:0 20px;line-height:1.5}code{background:#f2f3ef;padding:3px 6px;border-radius:6px}pre{background:#171a17;color:#fff;padding:16px;border-radius:12px;overflow:auto}.ok{padding:14px;border-radius:12px;background:#edf8e3;color:#427714}</style></head>
+<body>
+<h1>Truck Bike · Firestore</h1>
+<p>Каталог больше не заполняется из браузера. Это специально сделано, чтобы клиент не получил права записи в <code>products</code>.</p>
+<div class="ok">Используй серверный seed-скрипт <code>scripts/seed-firestore.mjs</code>.</div>
+<pre>npm install
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json npm run seed</pre>
+<p>После seed коллекции <code>products</code> и <code>categories</code> будут созданы. Коллекция <code>users</code> создаётся после регистрации, а <code>orders</code> — при первом заказе.</p>
+</body></html>

@@ -1,0 +1,65 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.blocked != true;
+    }
+
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /adminSettings/{docId} {
+      allow read, create, update: if isAdmin();
+      allow delete: if false;
+    }
+
+    match /users/{uid} {
+      allow create: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.data.role == 'user'
+        && request.resource.data.blocked == false;
+
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+
+      allow update: if isAdmin()
+        || (
+          signedIn() && request.auth.uid == uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            'email', 'profile', 'favorites', 'cart', 'addresses', 'cards', 'updatedAt'
+          ])
+        );
+
+      allow delete: if false;
+
+      match /orders/{orderId} {
+        allow read, create: if signedIn() && request.auth.uid == uid;
+        allow update: if isAdmin();
+        allow delete: if false;
+      }
+    }
+
+    match /supportTickets/{ticketId} {
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow read: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
+      allow update: if isAdmin()
+        || (signedIn() && resource.data.userId == request.auth.uid
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['subject','message','updatedAt']));
+      allow delete: if isAdmin();
+    }
+  }
+}

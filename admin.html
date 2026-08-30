@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Truck Bike · Admin</title>
+  <style>
+    :root{--bg:#0c0e0d;--panel:#151815;--panel2:#1b1f1a;--line:#2a3029;--text:#f3f5f0;--muted:#9ba59a;--green:#80d21c;--green2:#5aa70e;--danger:#ff5b5b;--yellow:#f0b429;--radius:18px}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0%,#1c2518 0,#0c0e0d 35%,#080908 100%);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+    .login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}.login-card{width:min(430px,100%);background:rgba(21,24,21,.94);border:1px solid var(--line);border-radius:26px;padding:30px;box-shadow:0 30px 100px rgba(0,0,0,.4)}.logo{font-size:28px;font-weight:900;font-style:italic;letter-spacing:-1px;margin-bottom:8px}.logo b{color:var(--green)}.login-card h1{margin:10px 0 8px;font-size:25px}.login-card p{color:var(--muted);margin:0 0 22px}.field{margin-bottom:14px}.field label{display:block;font-size:13px;color:#aeb6ac;margin-bottom:7px}.field input,.field select,.field textarea{width:100%;background:#10130f;border:1px solid #30362f;color:var(--text);border-radius:12px;padding:12px 13px;outline:0}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(128,210,28,.12)}
+    .btn{border:0;border-radius:12px;padding:11px 15px;font-weight:800;transition:.18s transform,.18s box-shadow,.18s background}.btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.2)}.btn.primary{background:var(--green);color:#10130e}.btn.primary:hover{background:#91e433}.btn.ghost{background:#20251f;color:var(--text);border:1px solid var(--line)}.btn.danger{background:rgba(255,91,91,.12);color:#ff7b7b;border:1px solid rgba(255,91,91,.25)}.btn.small{padding:8px 11px;font-size:13px}.error{margin-top:12px;color:#ff8b8b;font-size:13px;line-height:1.4}
+    .app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.side{position:sticky;top:0;height:100vh;background:rgba(12,14,13,.95);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column}.side-nav{margin-top:26px;display:grid;gap:6px}.side button{border:0;background:transparent;color:#b6beb5;border-radius:12px;padding:12px 13px;text-align:left;display:flex;gap:10px;align-items:center}.side button:hover,.side button.active{background:#1b201a;color:#fff}.side button.active{box-shadow:inset 3px 0 var(--green)}.side .icon{width:20px;text-align:center}.side-footer{margin-top:auto;color:#798379;font-size:12px;border-top:1px solid var(--line);padding-top:16px}.user-mini{display:flex;align-items:center;gap:10px}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#304026,#161a15);border:1px solid #37402f;font-weight:900;color:var(--green)}
+    .content{padding:28px;min-width:0}.top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:24px}.top h1{font-size:30px;margin:0 0 4px}.top p{margin:0;color:var(--muted)}.top-actions{display:flex;gap:8px;align-items:center}.status-dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(128,210,28,.12)}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}.stat{background:linear-gradient(160deg,#181c17,#11140f);border:1px solid var(--line);border-radius:18px;padding:17px;transition:.2s transform}.stat:hover{transform:translateY(-2px)}.stat small{color:var(--muted)}.stat strong{display:block;font-size:26px;margin-top:8px}.stat .sub{font-size:12px;color:#7f897d;margin-top:4px}
+    .panel{background:rgba(20,23,19,.93);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 18px;border-bottom:1px solid var(--line)}.panel-head h2{font-size:17px;margin:0}.panel-head .muted{font-size:12px}.panel-body{padding:18px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar input,.toolbar select{background:#10130f;color:#e8ede6;border:1px solid #30372e;border-radius:10px;padding:9px 11px;min-width:180px;outline:0}.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:13px 12px;border-bottom:1px solid #252b24;font-size:13px;vertical-align:middle}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7e887d;background:#171a16}tbody tr{transition:.15s background}tbody tr:hover{background:#171b15}.pill{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800;background:#222821;color:#b9c2b5}.pill.green{background:rgba(128,210,28,.12);color:#9ae94a}.pill.red{background:rgba(255,91,91,.12);color:#ff8a8a}.pill.yellow{background:rgba(240,180,41,.12);color:#f7c75a}.actions{display:flex;gap:6px;flex-wrap:wrap}.thumb{width:48px;height:38px;object-fit:cover;border-radius:8px;background:#20251f;border:1px solid var(--line)}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.68);display:grid;place-items:center;padding:20px;z-index:30;backdrop-filter:blur(8px)}.modal-card{width:min(760px,100%);max-height:92vh;overflow:auto;background:#141713;border:1px solid #353b33;border-radius:22px;box-shadow:0 30px 120px rgba(0,0,0,.55)}.modal-head{display:flex;justify-content:space-between;gap:10px;padding:18px 20px;border-bottom:1px solid var(--line)}.modal-head h3{margin:0}.close{border:0;background:#20241f;color:#ccd4c8;width:34px;height:34px;border-radius:10px}.modal-body{padding:20px}.specs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.specs .field{margin:0}
+    .ticket{border:1px solid var(--line);background:#171b16;border-radius:15px;padding:15px;margin-bottom:10px}.ticket:last-child{margin-bottom:0}.ticket-head{display:flex;justify-content:space-between;gap:10px}.ticket h3{font-size:15px;margin:0 0 5px}.ticket .meta{color:#7f897e;font-size:12px}.ticket-message{white-space:pre-wrap;line-height:1.55;color:#d7ddd5;margin:12px 0}.reply{background:#10130f;border:1px solid #2e342d;border-radius:12px;padding:11px;white-space:pre-wrap}.reply.empty{color:#697366;font-style:italic}.ticket-form{display:grid;gap:9px}.ticket-form textarea{min-height:90px}
+    .notice{padding:11px 13px;border-radius:12px;background:#182118;border:1px solid #2e4630;color:#a8d788;font-size:13px;margin-bottom:12px}.empty{padding:40px;text-align:center;color:#7f897e}.danger-text{color:#ff8585}
+    @media(max-width:1050px){.app{grid-template-columns:82px 1fr}.side .brand-text,.side button span:not(.icon),.side-footer{display:none}.side{align-items:center}.side button{width:52px;justify-content:center;padding:12px}.side .user-mini{justify-content:center}.cards{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:720px){.app{display:block}.side{position:static;height:auto;display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:12px 15px;border-right:0;border-bottom:1px solid var(--line)}.side-nav{display:flex;margin:0;gap:4px}.side-nav button{width:auto}.side-nav button span:not(.icon){display:none}.side .brand-text,.side-footer{display:none}.content{padding:16px}.top{align-items:stretch;flex-direction:column}.cards{grid-template-columns:1fr 1fr}.grid-2,.grid-3,.specs{grid-template-columns:1fr}.panel-body{padding:12px;overflow:auto}table{min-width:760px}}
+  </style>
+</head>
+<body>
+  <section id="login" class="login-wrap">
+    <div class="login-card">
+      <div class="logo">TRUCK <b>BIKE</b></div>
+      <h1>Админ-панель</h1>
+      <p>Вход только для пользователей с ролью <b>admin</b>.</p>
+      <div class="field"><label>Email</label><input id="loginEmail" type="email" autocomplete="username" placeholder="admin@example.com"></div>
+      <div class="field"><label>Пароль</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••"></div>
+      <button class="btn primary" id="loginBtn" style="width:100%">Войти</button>
+      <div id="loginError" class="error"></div>
+    </div>
+  </section>
+
+  <div id="app" class="app hidden">
+    <aside class="side">
+      <div class="logo">TRUCK <b>BIKE</b><span class="brand-text" style="font-size:14px;font-style:normal;font-weight:700;color:#859080"> ADMIN</span></div>
+      <div class="side-nav">
+        <button data-page="dashboard" class="active"><span class="icon">⌂</span><span>Обзор</span></button>
+        <button data-page="products"><span class="icon">🏍</span><span>Товары</span></button>
+        <button data-page="users"><span class="icon">◉</span><span>Аккаунты</span></button>
+        <button data-page="support"><span class="icon">?</span><span>Поддержка</span></button>
+        <button data-page="settings"><span class="icon">⚙</span><span>Настройки</span></button>
+      </div>
+      <div class="side-footer"><div class="user-mini"><div id="adminAvatar" class="avatar">A</div><div class="brand-text"><b id="adminName">Admin</b><div id="adminEmail" style="margin-top:3px">—</div></div></div><button id="logoutBtn" class="btn ghost small" style="margin-top:12px;width:100%">Выйти</button></div>
+    </aside>
+    <main class="content">
+      <div id="page"></div>
+    </main>
+  </div>
+
+  <div id="modal" class="modal hidden"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: 'AIzaSyCn5xqiGIdjAcmpn-wI3KU1JL03MLiRxas',
+      authDomain: 'nexora-28ce9.firebaseapp.com',
+      projectId: 'nexora-28ce9',
+      storageBucket: 'nexora-28ce9.firebasestorage.app',
+      messagingSenderId: '519608324015',
+      appId: '1:519608324015:web:7abddbaf489068d7e3695a'
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const state = { user: null, profile: null, page: 'dashboard', users: [], products: [], tickets: [], categories: [] };
+    const page = document.querySelector('#page');
+    const modal = document.querySelector('#modal');
+
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[s]));
+    const money = (v) => new Intl.NumberFormat('ru-RU').format(Number(v) || 0) + ' ₽';
+    const dateText = (v) => v?.toDate ? v.toDate().toLocaleString('ru-RU') : (v ? String(v) : '—');
+    const idOf = (doc) => doc.id;
+
+    function showError(target, err) { document.querySelector(target).textContent = err?.message || String(err); }
+    function setPage(name) { state.page = name; document.querySelectorAll('[data-page]').forEach(x => x.classList.toggle('active', x.dataset.page === name)); render(); }
+    function openModal(html) { modal.innerHTML = html; modal.classList.remove('hidden'); }
+    function closeModal() { modal.classList.add('hidden'); modal.innerHTML = ''; }
+    modal.addEventListener('click', e => { if (e.target === modal || e.target.closest('[data-close]')) closeModal(); });
+
+    async function checkAdmin(user) {
+      const snap = await db.collection('users').doc(user.uid).get();
+      const data = snap.exists ? snap.data() : null;
+      if (!data || data.role !== 'admin' || data.blocked === true) {
+        await auth.signOut();
+        throw new Error('У этой учётной записи нет доступа к админ-панели.');
+      }
+      state.user = user; state.profile = data;
+      document.querySelector('#adminName').textContent = data.profile?.name || user.displayName || 'Администратор';
+      document.querySelector('#adminEmail').textContent = user.email || '—';
+      document.querySelector('#adminAvatar').textContent = (data.profile?.name || user.email || 'A').slice(0,1).toUpperCase();
+      document.querySelector('#login').classList.add('hidden'); document.querySelector('#app').classList.remove('hidden');
+    }
+
+    async function refreshData() {
+      const [usersSnap, productsSnap, ticketsSnap, catsSnap] = await Promise.all([
+        db.collection('users').orderBy('createdAt','desc').limit(100).get().catch(() => db.collection('users').limit(100).get()),
+        db.collection('products').orderBy('name').get().catch(() => db.collection('products').get()),
+        db.collection('supportTickets').orderBy('createdAt','desc').limit(100).get().catch(() => db.collection('supportTickets').get()),
+        db.collection('categories').orderBy('name').get().catch(() => db.collection('categories').get())
+      ]);
+      state.users = usersSnap.docs.map(d => ({id:d.id,...d.data()}));
+      state.products = productsSnap.docs.map(d => ({id:d.id,...d.data()}));
+      state.tickets = ticketsSnap.docs.map(d => ({id:d.id,...d.data()}));
+      state.categories = catsSnap.docs.map(d => ({id:d.id,...d.data()}));
+    }
+
+    function render() {
+      const titles = {dashboard:'Обзор магазина',products:'Товары',users:'Аккаунты',support:'Поддержка',settings:'Настройки'};
+      const subtitles = {dashboard:'Контроль каталога, пользователей и обращений.',products:'Управляй каталогом питбайков.',users:'Блокировка аккаунтов и выдача админ-доступа.',support:'Отвечай на обращения клиентов.',settings:'Служебные настройки Firebase.'};
+      page.innerHTML = `<header class="top"><div><h1>${titles[state.page]}</h1><p>${subtitles[state.page]}</p></div><div class="top-actions"><span class="status-dot"></span><span style="color:#929c90;font-size:13px">Firebase Online</span></div></header>` + ({dashboard:renderDashboard,products:renderProducts,users:renderUsers,support:renderSupport,settings:renderSettings}[state.page])();
+    }
+
+    function renderDashboard() {
+      const blocked = state.users.filter(x=>x.blocked===true).length;
+      const admins = state.users.filter(x=>x.role==='admin').length;
+      const openTickets = state.tickets.filter(x=>x.status!=='closed').length;
+      return `<div class="cards">
+        <div class="stat"><small>Питбайков</small><strong>${state.products.length}</strong><div class="sub">В каталоге</div></div>
+        <div class="stat"><small>Пользователей</small><strong>${state.users.length}</strong><div class="sub">${blocked} заблокировано</div></div>
+        <div class="stat"><small>Администраторов</small><strong>${admins}</strong><div class="sub">С доступом к панели</div></div>
+        <div class="stat"><small>Обращений</small><strong>${openTickets}</strong><div class="sub">Открытых тикетов</div></div>
+      </div>
+      <div class="grid-2"><section class="panel"><div class="panel-head"><h2>Последние пользователи</h2><button class="btn ghost small" data-goto="users">Все аккаунты</button></div><div class="panel-body">${state.users.slice(0,6).map(u=>`<div style="display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #242a23"><div><b>${esc(u.profile?.name || 'Без имени')}</b><div style="font-size:12px;color:#788176">${esc(u.email || '—')}</div></div><div>${u.blocked?'<span class="pill red">Заблокирован</span>':u.role==='admin'?'<span class="pill green">Admin</span>':'<span class="pill">Пользователь</span>'}</div></div>`).join('') || '<div class="empty">Пока нет пользователей.</div>'}</div></section>
+      <section class="panel"><div class="panel-head"><h2>Новые обращения</h2><button class="btn ghost small" data-goto="support">Поддержка</button></div><div class="panel-body">${state.tickets.slice(0,5).map(t=>`<div class="ticket"><div class="ticket-head"><div><h3>${esc(t.subject || 'Вопрос')}</h3><div class="meta">${esc(t.userEmail || t.userId || 'Пользователь')} · ${dateText(t.createdAt)}</div></div><span class="pill ${t.status==='closed'?'':'yellow'}">${esc(t.status || 'open')}</span></div><div class="ticket-message">${esc(t.message || '')}</div></div>`).join('') || '<div class="empty">Обращений пока нет.</div>'}</div></section></div>`;
+    }
+
+    function renderProducts() {
+      return `<section class="panel"><div class="panel-head"><h2>Каталог питбайков</h2><div class="actions"><button class="btn ghost small" id="seedCategories">Создать категории</button><button class="btn primary small" id="newProduct">+ Добавить товар</button></div></div><div class="panel-body"><div class="toolbar" style="margin-bottom:13px"><input id="productSearch" placeholder="Поиск по названию..."><select id="categoryFilter"><option value="">Все категории</option>${state.categories.map(c=>`<option value="${esc(c.name)}">${esc(c.name)}</option>`).join('')}</select></div><div style="overflow:auto"><table><thead><tr><th>Фото</th><th>Название</th><th>Категория</th><th>Цена</th><th>Объём</th><th>Колёса</th><th>Остаток</th><th></th></tr></thead><tbody id="productRows">${productRows(state.products)}</tbody></table></div></div></section>`;
+    }
+    function productRows(products) {
+      return products.map(p=>`<tr><td><img class="thumb" src="${esc(p.image||'')}" alt=""></td><td><b>${esc(p.name)}</b><div style="font-size:11px;color:#717b70">${esc(p.brand||'TRUCK BIKE')}</div></td><td>${esc(p.cat||p.category||'—')}</td><td><b>${money(p.price)}</b>${p.old?`<div style="font-size:11px;color:#6f776d;text-decoration:line-through">${money(p.old)}</div>`:''}</td><td>${esc(p.engineCc ? p.engineCc+' cc' : '—')}</td><td>${esc(p.sizes?.join(', ') || p.wheelSize || '—')}</td><td>${esc(p.stock ?? 0)}</td><td><div class="actions"><button class="btn ghost small" data-edit-product="${esc(p.id)}">Изменить</button><button class="btn danger small" data-delete-product="${esc(p.id)}">Удалить</button></div></td></tr>`).join('') || '<tr><td colspan="8"><div class="empty">Товаров пока нет. Добавь первый питбайк.</div></td></tr>';
+    }
+
+    function renderUsers() {
+      return `<section class="panel"><div class="panel-head"><h2>Аккаунты</h2><span class="muted">Изменения применяются сразу к Firestore</span></div><div class="panel-body"><div class="toolbar" style="margin-bottom:13px"><input id="userSearch" placeholder="Email или имя..."></div><div style="overflow:auto"><table><thead><tr><th>Пользователь</th><th>UID</th><th>Роль</th><th>Статус</th><th>Создан</th><th>Действия</th></tr></thead><tbody id="userRows">${userRows(state.users)}</tbody></table></div></div></section>`;
+    }
+    function userRows(users) {
+      return users.map(u=>`<tr><td><b>${esc(u.profile?.name || 'Без имени')}</b><div style="font-size:11px;color:#778075">${esc(u.email || '—')}</div></td><td><code style="font-size:11px;color:#7f897d">${esc(u.id)}</code></td><td>${u.role==='admin'?'<span class="pill green">Admin</span>':'<span class="pill">User</span>'}</td><td>${u.blocked?'<span class="pill red">Заблокирован</span>':'<span class="pill green">Активен</span>'}</td><td>${dateText(u.createdAt)}</td><td><div class="actions">${u.id===state.user?.uid?'<span class="pill">Это вы</span>':''}${u.id!==state.user?.uid?`<button class="btn ${u.blocked?'primary':'danger'} small" data-block-user="${esc(u.id)}">${u.blocked?'Разблокировать':'Заблокировать'}</button><button class="btn ghost small" data-role-user="${esc(u.id)}">${u.role==='admin'?'Снять admin':'Выдать admin'}</button>`:''}</div></td></tr>`).join('') || '<tr><td colspan="6"><div class="empty">Пользователей нет.</div></td></tr>';
+    }
+
+    function renderSupport() {
+      return `<section class="panel"><div class="panel-head"><h2>Вопросы пользователей</h2><div class="toolbar"><select id="ticketStatus"><option value="all">Все</option><option value="open">Открытые</option><option value="closed">Закрытые</option></select></div></div><div class="panel-body" id="ticketList">${ticketRows(state.tickets)}</div></section>`;
+    }
+    function ticketRows(tickets) {
+      return tickets.map(t=>`<article class="ticket"><div class="ticket-head"><div><h3>${esc(t.subject||'Обращение')}</h3><div class="meta">${esc(t.userEmail || t.userId || 'Пользователь')} · ${dateText(t.createdAt)}</div></div><span class="pill ${t.status==='closed'?'':'yellow'}">${esc(t.status || 'open')}</span></div><div class="ticket-message">${esc(t.message || '')}</div><div class="reply ${t.reply?'':'empty'}">${esc(t.reply || 'Ответ ещё не отправлен.')}</div><div style="height:10px"></div><form class="ticket-form" data-ticket-form="${esc(t.id)}"><textarea name="reply" placeholder="Напиши ответ пользователю...">${esc(t.reply || '')}</textarea><div class="actions"><button class="btn primary small" type="submit">Сохранить ответ</button><button class="btn ghost small" type="button" data-close-ticket="${esc(t.id)}">${t.status==='closed'?'Открыть':'Закрыть'} обращение</button></div></form></article>`).join('') || '<div class="empty">Пока нет обращений. Когда клиент создаст тикет, он появится здесь.</div>';
+    }
+
+    function renderSettings() {
+      return `<div class="grid-2"><section class="panel"><div class="panel-head"><h2>Структура Firestore</h2></div><div class="panel-body"><div class="notice">Коллекции создаются Firestore автоматически при первой записи.</div><div class="specs"><div class="field"><label>Каталог</label><input value="products" readonly></div><div class="field"><label>Категории</label><input value="categories" readonly></div><div class="field"><label>Пользователи</label><input value="users/{uid}" readonly></div><div class="field"><label>Заказы</label><input value="users/{uid}/orders" readonly></div><div class="field"><label>Поддержка</label><input value="supportTickets" readonly></div><div class="field"><label>Служебные</label><input value="adminSettings" readonly></div></div><button class="btn primary" id="initFirestore" style="margin-top:15px">Инициализировать служебную запись</button></div></section><section class="panel"><div class="panel-head"><h2>Текущий администратор</h2></div><div class="panel-body"><div class="user-mini"><div class="avatar">${esc((state.profile?.profile?.name||state.user?.email||'A').slice(0,1).toUpperCase())}</div><div><b>${esc(state.profile?.profile?.name||'Администратор')}</b><div style="font-size:12px;color:#778075">${esc(state.user?.email||'')}</div></div></div><div style="margin-top:16px;color:#899388;font-size:13px;line-height:1.6">Роль хранится в <code>users/{uid}.role</code>. Самостоятельно выдать себе admin через клиент нельзя — правила Firestore должны разрешать это только другому администратору.</div></div></section></div>`;
+    }
+
+    function productModal(product = {}) {
+      const isEdit = !!product.id;
+      const categories = state.categories.length ? state.categories.map(c=>c.name) : ['Питбайки 110cc','Питбайки 125cc','Питбайки 140cc','Питбайки 150cc','Мини-кросс','Электропитбайки'];
+      openModal(`<div class="modal-card"><div class="modal-head"><h3>${isEdit?'Редактировать питбайк':'Добавить питбайк'}</h3><button class="close" data-close>×</button></div><div class="modal-body"><form id="productForm"><div class="grid-2"><div><div class="field"><label>Название</label><input name="name" required value="${esc(product.name||'TRUCK X 125')}"></div><div class="field"><label>Цена, ₽</label><input name="price" type="number" min="0" required value="${esc(product.price||0)}"></div><div class="field"><label>Старая цена, ₽</label><input name="old" type="number" min="0" value="${esc(product.old||'')}"></div><div class="field"><label>Категория</label><select name="cat">${categories.map(c=>`<option ${product.cat===c?'selected':''}>${esc(c)}</option>`).join('')}</select></div><div class="field"><label>Фото URL</label><input name="image" type="url" value="${esc(product.image||'')}" placeholder="https://..."></div></div><div><div class="field"><label>Двигатель, cc</label><input name="engineCc" type="number" min="50" max="500" value="${esc(product.engineCc||125)}"></div><div class="field"><label>Тип двигателя</label><input name="engineType" value="${esc(product.engineType||'4-тактный, 1-цилиндр')}"></div><div class="field"><label>Охлаждение</label><input name="cooling" value="${esc(product.cooling||'Воздушное')}"></div><div class="field"><label>КПП</label><input name="transmission" value="${esc(product.transmission||'Механика, 4+1')}"></div><div class="field"><label>Вес, кг</label><input name="weight" type="number" value="${esc(product.weight||75)}"></div></div></div><h4 style="margin:20px 0 12px">Характеристики питбайка</h4><div class="specs"><div class="field"><label>Колёса / размер</label><input name="wheelSize" value="${esc(product.wheelSize||product.sizes?.join(', ')||'17/14')}"></div><div class="field"><label>Высота по седлу, мм</label><input name="seatHeight" type="number" value="${esc(product.seatHeight||850)}"></div><div class="field"><label>Бак, л</label><input name="tank" type="number" step="0.1" value="${esc(product.tank||5)}"></div><div class="field"><label>Макс. скорость, км/ч</label><input name="maxSpeed" type="number" value="${esc(product.maxSpeed||80)}"></div><div class="field"><label>Тормоза</label><input name="brakes" value="${esc(product.brakes||'Дисковые, перед/зад')}"></div><div class="field"><label>Старт</label><select name="starter"><option ${product.starter==='Электро'?'selected':''}>Электро</option><option ${product.starter==='Электро + кик'?'selected':''}>Электро + кик</option><option ${product.starter==='Кик'?'selected':''}>Кик</option></select></div><div class="field"><label>Остаток</label><input name="stock" type="number" min="0" value="${esc(product.stock||0)}"></div><div class="field"><label>Доставка</label><input name="delivery" value="${esc(product.delivery||'завтра')}"></div></div><div class="field" style="margin-top:12px"><label>Описание</label><textarea name="description" rows="4">${esc(product.description||'Питбайк для города, грунта и лёгких тренировок.')}</textarea></div><div class="actions" style="justify-content:flex-end"><button class="btn ghost" type="button" data-close>Отмена</button><button class="btn primary" type="submit">${isEdit?'Сохранить':'Создать товар'}</button></div><input type="hidden" name="id" value="${esc(product.id||'')}"></form></div></div>`);
+    }
+
+    async function saveProduct(form) {
+      const data = Object.fromEntries(new FormData(form).entries());
+      const payload = { name:data.name.trim(), price:Number(data.price)||0, old:Number(data.old)||null, cat:data.cat, image:data.image.trim(), engineCc:Number(data.engineCc)||0, engineType:data.engineType.trim(), cooling:data.cooling.trim(), transmission:data.transmission.trim(), weight:Number(data.weight)||0, wheelSize:data.wheelSize.trim(), sizes:data.wheelSize.split(/\s*,\s*/).filter(Boolean), seatHeight:Number(data.seatHeight)||0, tank:Number(data.tank)||0, maxSpeed:Number(data.maxSpeed)||0, brakes:data.brakes.trim(), starter:data.starter, stock:Number(data.stock)||0, delivery:data.delivery.trim(), description:data.description.trim(), updatedAt:firebase.firestore.FieldValue.serverTimestamp() };
+      if (!payload.name || !payload.image) throw new Error('Укажи название и URL фотографии.');
+      if (data.id) await db.collection('products').doc(data.id).set(payload,{merge:true});
+      else await db.collection('products').add({...payload, rating:0,reviews:0,brand:'TRUCK BIKE',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+      closeModal(); await refreshData(); render();
+    }
+
+    async function toggleBlocked(uid, blocked) { await db.collection('users').doc(uid).set({blocked:!blocked,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}); await refreshData(); render(); }
+    async function toggleAdmin(uid, role) { await db.collection('users').doc(uid).set({role:role==='admin'?'user':'admin',updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}); await refreshData(); render(); }
+    async function replyTicket(id, reply) { await db.collection('supportTickets').doc(id).set({reply, status:'answered', updatedAt:firebase.firestore.FieldValue.serverTimestamp(), answeredBy:state.user.uid},{merge:true}); await refreshData(); render(); }
+    async function closeTicket(id, closed) { await db.collection('supportTickets').doc(id).set({status:closed?'closed':'open',updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}); await refreshData(); render(); }
+
+    async function initFirestore() { await db.collection('adminSettings').doc('panel').set({name:'Truck Bike Admin',initializedAt:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:state.user.uid},{merge:true}); alert('Служебная коллекция adminSettings создана.'); }
+    async function seedCategories() {
+      const defaults = [['Питбайки 110cc','110cc'],['Питбайки 125cc','125cc'],['Питбайки 140cc','140cc'],['Питбайки 150cc','150cc'],['Мини-кросс','mini'],['Электропитбайки','electric'],['Запчасти','parts'],['Аксессуары','accessories'],['Шлемы и защита','helmet']];
+      for (const [name,key] of defaults) await db.collection('categories').doc(key).set({name,key,count:0,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+      await refreshData(); render(); alert('Категории готовы.');
+    }
+
+    document.addEventListener('click', async (e) => {
+      const nav = e.target.closest('[data-page]'); if(nav){setPage(nav.dataset.page);return;}
+      const goto = e.target.closest('[data-goto]'); if(goto){setPage(goto.dataset.goto);return;}
+      if(e.target.id==='logoutBtn'){await auth.signOut();return;}
+      if(e.target.id==='newProduct'){productModal();return;}
+      if(e.target.id==='seedCategories'){try{await seedCategories()}catch(err){alert(err.message)}}
+      if(e.target.id==='initFirestore'){try{await initFirestore()}catch(err){alert(err.message)}}
+      const edit = e.target.closest('[data-edit-product]'); if(edit){const p=state.products.find(x=>x.id===edit.dataset.editProduct);productModal(p);return;}
+      const del = e.target.closest('[data-delete-product]'); if(del){if(confirm('Удалить этот товар из каталога?')){try{await db.collection('products').doc(del.dataset.deleteProduct).delete();await refreshData();render()}catch(err){alert(err.message)}}return;}
+      const block = e.target.closest('[data-block-user]'); if(block){const u=state.users.find(x=>x.id===block.dataset.blockUser);if(confirm(u.blocked?'Разблокировать аккаунт?':'Заблокировать аккаунт?')){try{await toggleBlocked(u.id,u.blocked)}catch(err){alert(err.message)}}return;}
+      const role = e.target.closest('[data-role-user]'); if(role){const u=state.users.find(x=>x.id===role.dataset.roleUser);if(confirm(u.role==='admin'?'Снять роль admin?':'Выдать роль admin?')){try{await toggleAdmin(u.id,u.role)}catch(err){alert(err.message)}}return;}
+      const closeTicketBtn = e.target.closest('[data-close-ticket]'); if(closeTicketBtn){const t=state.tickets.find(x=>x.id===closeTicketBtn.dataset.closeTicket);try{await closeTicket(t.id,t.status!=='closed')}catch(err){alert(err.message)}return;}
+    });
+
+    document.addEventListener('submit', async (e)=>{
+      if(e.target.id==='loginForm') return;
+      const form=e.target.closest('#productForm'); if(form){e.preventDefault();try{await saveProduct(form)}catch(err){alert(err.message)}return;}
+      const ticket=e.target.closest('[data-ticket-form]'); if(ticket){e.preventDefault();const id=ticket.dataset.ticketForm;const text=new FormData(ticket).get('reply').trim();try{await replyTicket(id,text)}catch(err){alert(err.message)}return;}
+    });
+    document.addEventListener('input', e=>{
+      if(e.target.id==='productSearch'){const q=e.target.value.toLowerCase();const cat=document.querySelector('#categoryFilter')?.value||'';document.querySelector('#productRows').innerHTML=productRows(state.products.filter(p=>(p.name||'').toLowerCase().includes(q) && (!cat||p.cat===cat)));}
+      if(e.target.id==='userSearch'){const q=e.target.value.toLowerCase();document.querySelector('#userRows').innerHTML=userRows(state.users.filter(u=>`${u.profile?.name||''} ${u.email||''} ${u.id}`.toLowerCase().includes(q)));}
+    });
+    document.addEventListener('change',e=>{if(e.target.id==='categoryFilter'){const q=document.querySelector('#productSearch')?.value.toLowerCase()||'';const cat=e.target.value;document.querySelector('#productRows').innerHTML=productRows(state.products.filter(p=>(p.name||'').toLowerCase().includes(q)&&(!cat||p.cat===cat)));}if(e.target.id==='ticketStatus'){const v=e.target.value;document.querySelector('#ticketList').innerHTML=ticketRows(state.tickets.filter(t=>v==='all'||(v==='closed'?t.status==='closed':t.status!=='closed')))}});
+
+    document.querySelector('#loginBtn').addEventListener('click', async ()=>{const email=document.querySelector('#loginEmail').value.trim();const password=document.querySelector('#loginPassword').value;const err=document.querySelector('#loginError');err.textContent='';try{await auth.signInWithEmailAndPassword(email,password)}catch(error){err.textContent=error.message||'Не удалось войти.'}});
+    document.querySelector('#loginPassword').addEventListener('keydown',e=>{if(e.key==='Enter')document.querySelector('#loginBtn').click()});
+
+    auth.onAuthStateChanged(async user=>{
+      if(!user){state.user=null;document.querySelector('#app').classList.add('hidden');document.querySelector('#login').classList.remove('hidden');return;}
+      try{await checkAdmin(user);await refreshData();render()}catch(err){document.querySelector('#loginError').textContent=err.message;document.querySelector('#login').classList.remove('hidden');document.querySelector('#app').classList.add('hidden');}
+    });
+  </script>
+</body>
+</html>

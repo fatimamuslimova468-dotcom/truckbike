@@ -1,0 +1,14 @@
+{
+  "collection": "supportTickets",
+  "fields": {
+    "userId": "string",
+    "userEmail": "string",
+    "subject": "string",
+    "message": "string",
+    "status": "open | answered | closed",
+    "reply": "string",
+    "createdAt": "timestamp",
+    "updatedAt": "timestamp",
+    "answeredBy": "string"
+  }
+}

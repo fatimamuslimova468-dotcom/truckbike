@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#171a17">
+  <title>Truck Bike — питбайки</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <aside class="sidebar">
+      <button class="logo" data-route="home" aria-label="Truck Bike">
+        <span>TRUCK</span> <b>BIKE</b>
+      </button>
+      <p class="sidebar-label">Магазин</p>
+      <nav id="desktopNav"></nav>
+      <p class="sidebar-label sidebar-label-account">Аккаунт</p>
+      <nav id="accountNav"></nav>
+      <div class="sidebar-account" data-route="profile">
+        <div class="avatar avatar-small">ИП</div>
+        <div><strong id="sidebarProfileName">Пользователь</strong><span>Личный кабинет</span></div>
+        <span class="sidebar-arrow" aria-hidden="true"></span>
+      </div>
+    </aside>
+
+    <div class="page-shell">
+      <header class="topbar">
+        <button class="back-button hidden" id="backBtn" aria-label="Назад"></button>
+        <button class="mobile-logo logo" data-route="home" aria-label="Truck Bike"><span>TRUCK</span> <b>BIKE</b></button>
+        <button class="desktop-search" data-route="search">
+          <span id="desktopSearchIcon"></span>
+          <span>Поиск питбайков, аксессуаров и запчастей</span>
+        </button>
+        <div class="header-actions">
+          <button class="icon-button" id="notifyBtn" aria-label="Уведомления"></button>
+          <button class="icon-button" data-route="favorites" aria-label="Избранное"></button>
+          <button class="icon-button cart-top" data-route="cart" aria-label="Корзина"><span id="desktopCartIcon"></span><b class="count-badge" data-cart-badge></b></button>
+          <button class="profile-trigger" data-route="profile"><span class="avatar avatar-small">ИП</span><span class="profile-trigger-name" id="headerProfileName">Пользователь</span><span class="chevron"></span></button>
+        </div>
+      </header>
+
+      <main id="screen"></main>
+      <nav class="bottom-nav" id="bottomNav"></nav>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <div id="modalRoot"></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
